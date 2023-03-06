@@ -11,7 +11,7 @@ const addTodo = () => {
   const newTodoItem: TodoItem = {
     id: uuidv4(),
     title: newTodoTitle.value,
-    status: 'unprocessed',
+    status: ['unprocessed', '未対応'],
     description: '',
     createdAt: now,
     updatedAt: now
@@ -22,7 +22,7 @@ const addTodo = () => {
 const makeTodoDone = (id: string) => {
   const done = todos.value
     .filter(t => t.id === id)
-    .map(t => ({ ...t, status: 'done' as TodoStatus }))
+    .map(t => ({ ...t, status: ['done', '完了'] as TodoStatus }))
     .at(0)
   if (done) {
     // idで消して更新したものを戻す
@@ -47,6 +47,9 @@ const makeTodoDone = (id: string) => {
           <div>
             <p class="todo-list-card-caption-title">
               {{ todo.title }}
+            </p>
+            <p>
+              {{ todo.status[1] }}
             </p>
           </div>
           <div class="todo-list-card-button">
@@ -83,5 +86,9 @@ const makeTodoDone = (id: string) => {
 
 .todo-list-card-caption-title {
   @apply text-lg font-semibold text-stone-800;
+}
+
+.todo-list-card-caption-status {
+  @apply text-gray-600;
 }
 </style>
