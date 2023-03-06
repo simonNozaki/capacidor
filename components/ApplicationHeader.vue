@@ -7,6 +7,10 @@
 </template>
 
 <style scoped>
+header {
+  @apply mt-10;
+}
+
 .title {
   @apply text-3xl font-bold text-teal-800
 }
