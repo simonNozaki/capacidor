@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import { v4 as uuidv4 } from 'uuid'
 import { TodoItem, TodoStatus, useTodo } from '@/composables/useTodo'
 import Button from '@/components/atoms/Button.vue'
@@ -48,9 +49,30 @@ const makeTodoDone = (id: string) => {
             <p class="todo-list-card-caption-title">
               {{ todo.title }}
             </p>
-            <p>
-              {{ todo.status[1] }}
-            </p>
+            <Menu as="div" class="inline-block text-left">
+              <MenuButton as="button">{{ todo.status[1] }}</MenuButton>
+              <MenuItems
+                class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              >
+                <div>
+                  <MenuItem v-slot="{ active }" as="div">
+                    <button :class="[active ? 'todo-list-card-status-button__active' : 'todo-list-card-status-button']">
+                      未対応
+                    </button>
+                  </MenuItem>
+                  <MenuItem v-slot="{ active }" as="div">
+                    <button :class="[active ? 'todo-list-card-status-button__active' : 'todo-list-card-status-button']">
+                      対応中
+                    </button>
+                  </MenuItem>
+                  <MenuItem v-slot="{ active }" as="div">
+                    <button :class="[active ? 'todo-list-card-status-button__active' : 'todo-list-card-status-button']">
+                      対処しない
+                    </button>
+                  </MenuItem>
+                </div>
+              </MenuItems>
+            </Menu>
           </div>
           <div class="todo-list-card-button">
             <Button @click="makeTodoDone(todo.id)">
@@ -88,7 +110,11 @@ const makeTodoDone = (id: string) => {
   @apply text-lg font-semibold text-stone-800;
 }
 
-.todo-list-card-caption-status {
-  @apply text-gray-600;
+.todo-list-card-status-button {
+  @apply flex items-center w-full rounded-md p-2 text-stone-800;
+}
+
+.todo-list-card-status-button__active {
+  @apply flex items-center w-full rounded-md p-2 bg-teal-800 text-white font-semibold;
 }
 </style>

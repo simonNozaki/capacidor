@@ -26,6 +26,7 @@
   "dependencies": {
     "@capacitor/core": "^4.7.0",
     "@capacitor/ios": "^4.7.0",
+    "@headlessui/vue": "^1.7.12",
     "@nuxtjs/tailwindcss": "^6.4.1",
     "@types/uuid": "^9.0.1",
     "uuid": "^9.0.0"
