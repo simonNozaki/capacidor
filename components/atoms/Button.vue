@@ -35,15 +35,22 @@ const classes = computed(() => ({
 
 <style scoped>
 .button {
-  @apply rounded bg-teal-600
-  hover:bg-teal-400 focus:outline-none;
+  @apply rounded m-0;
+}
+
+.primary {
+  @apply bg-teal-600 font-semibold text-white hover:bg-teal-400 focus:outline-none;
+}
+
+.secondary {
+  @apply bg-gray-100 text-stone-800 hover:bg-gray-50 focus:outline-none;
 }
 
 .medium {
   @apply px-3 py-2;
 }
 
-.button-text {
-  @apply font-semibold text-white;
+.small {
+  @apply px-2 py-1;
 }
 </style>

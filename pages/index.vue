@@ -57,8 +57,10 @@ const getActiveStatusClasses = (isActive: boolean): string[] => {
             <div class="top-16 w-56">
               <Menu as="div" class="relative inline-block text-left">
                 <div>
-                  <MenuButton class="status-menu-button">
-                    {{ todo.status[1] }}
+                  <MenuButton as="div" class="status-menu-button">
+                    <Button size="small" order="secondary">
+                      {{ todo.status[1] }}
+                    </Button>
                   </MenuButton>
                 </div>
 
