@@ -1,18 +1,32 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
+export type ButtonSize = 'small' | 'medium'
+export type ButtonStyleOrder = 'primary' | 'secondary'
+
+export interface Props {
+  order?: ButtonStyleOrder
+  size?: ButtonSize
+}
+
 export interface Emits {
   (e: 'click'): void
 }
 
+const props = defineProps<Props>()
 const emits = defineEmits<Emits>()
 
 const click = () => {
   emits('click')
 }
+
+const classes = computed(() => ({
+  [props.order ? props.order : 'primary']: true,
+  [props.size ? props.size : 'medium']: true
+}))
 </script>
 
 <template>
-  <button class="button" @click="click">
+  <button class="button" :class="classes" @click="click">
     <span class="button-text">
       <slot />
     </span>
@@ -21,8 +35,12 @@ const click = () => {
 
 <style scoped>
 .button {
-  @apply rounded px-3 py-2 bg-teal-600
+  @apply rounded bg-teal-600
   hover:bg-teal-400 focus:outline-none;
+}
+
+.medium {
+  @apply px-3 py-2;
 }
 
 .button-text {
