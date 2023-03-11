@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+/*
+ * アプリのエントリポイント。LaunchScreenののち環境選択ビューに移る
+ */
 @main
 struct CapacidorApp : App {
     // AppDelegateをSwiftUIで使えるようにする: https://www.yururiwork.net/archives/1163
@@ -14,7 +17,7 @@ struct CapacidorApp : App {
     
     var body: some Scene {
         WindowGroup {
-            MainView()
+            EnvironmentView().environmentObject(AppRuntimeState())
         }
     }
 }
