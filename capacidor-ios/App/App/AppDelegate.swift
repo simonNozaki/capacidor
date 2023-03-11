@@ -1,7 +1,9 @@
 import UIKit
 import Capacitor
 
-@UIApplicationMain
+/*
+ * Capacitor 自動生成のDelegate、CapacidorAppに中継される
+ */
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
@@ -11,7 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         print("Boot application => ", application)
         print("connected scese => ", application.connectedScenes)
-        print("UI Window => ", window)
         return true
     }
 
