@@ -6,13 +6,16 @@
 //
 
 import SwiftUI
+import Foundation
 
 /*
  * 環境情報を入力するView、ウェブビューのエントリポイントも兼ねる
  */
 struct EnvironmentView: View {
     @State
-    private var envString: String = ""
+    private var envString = ""
+    @State
+    private var isDestinationNotFound = false
     @EnvironmentObject var appRuntimeState: AppRuntimeState
     
     var body: some View {
@@ -27,8 +30,33 @@ struct EnvironmentView: View {
                     .textFieldStyle(.roundedBorder)
                 Button(
                     action: {
-                        self.appRuntimeState.isEnvironmentValid = true
                         // 必要ならここでURL文字列の検証を入れてもいい
+                        guard let url = URL(string: self.envString) else {
+                            isDestinationNotFound = false
+                            return
+                        }
+                        print("Not guarded!")
+                        // 必要ならここでURL文字列の検証を入れてもいい
+                        URLSession.shared.dataTask(with: url) { (data, response, error) in
+                            print(response)
+                            if let error = error {
+                                isDestinationNotFound = true
+                                return
+                            }
+                            guard let response = response as? HTTPURLResponse else {
+                                isDestinationNotFound = true
+                                return
+                            }
+                            if response.statusCode != 200 {
+                                isDestinationNotFound = true
+                                return
+                            }
+                            guard let data = data, let url = response.url else {
+                                isDestinationNotFound = true
+                                return
+                            }
+                            self.appRuntimeState.isEnvironmentValid = true
+                        }.resume()
                     },
                     label: {
                         Text("GO")
@@ -39,7 +67,11 @@ struct EnvironmentView: View {
                             .foregroundColor(Color.white)
                             .cornerRadius(4)
                     }
-                )
+                ).alert("宛先のウェブページがありません", isPresented: $isDestinationNotFound) {
+                    Button("OK") {}
+                } message: {
+                    Text("指定のURLは存在しないようです")
+                }
                 NavigationLink(
                     destination: MainView(hostUrl: self.$envString.wrappedValue),
                     isActive: $appRuntimeState.isEnvironmentValid) {
