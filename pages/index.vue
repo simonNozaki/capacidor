@@ -3,7 +3,8 @@ import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import { v4 as uuidv4 } from 'uuid'
 import { TodoItem, TodoStatus, useTodo } from '@/composables/useTodo'
 import Button from '@/components/atoms/Button.vue'
-import TextInput from '~~/components/atoms/TextInput.vue'
+import TextInput from '@/components/atoms/TextInput.vue'
+import ChevronDown from '@/components/atoms/ChevronDown.vue'
 const { todos } = useTodo()
 const newTodoTitle = ref('')
 
@@ -21,14 +22,29 @@ const addTodo = () => {
 }
 
 const makeTodoDone = (id: string) => {
-  const done = todos.value
-    .filter(t => t.id === id)
-    .map(t => ({ ...t, status: ['done', '完了'] as TodoStatus }))
-    .at(0)
+  const done = getUpdatedTodoOrNull(id, ['done', '完了'])
   if (done) {
     // idで消して更新したものを戻す
     todos.value = todos.value.filter(t => t.id !== id)
   }
+}
+
+const setStatus = (id: string, status: TodoStatus) => {
+  const updated = getUpdatedTodoOrNull(id, status)
+  if (updated) {
+    todos.value = todos.value.filter(t => t.id !== id)
+    todos.value.push(updated)
+  }
+}
+
+/**
+ * ステータスを更新したToDo要素を返す
+ */
+const getUpdatedTodoOrNull = (id: string, status: TodoStatus): TodoItem | undefined => {
+  return todos.value
+    .filter(t => t.id === id)
+    .map(t => ({ ...t, status: status as TodoStatus }))
+    .at(0)
 }
 
 const getActiveStatusClasses = (isActive: boolean): string[] => {
@@ -59,7 +75,7 @@ const getActiveStatusClasses = (isActive: boolean): string[] => {
                 <div>
                   <MenuButton as="div" class="status-menu-button">
                     <Button size="small" order="secondary">
-                      {{ todo.status[1] }}
+                      <span> {{ todo.status[1] }} </span> <span class="inline-block ml-1"> <ChevronDown size="12" /> </span>
                     </Button>
                   </MenuButton>
                 </div>
@@ -77,15 +93,15 @@ const getActiveStatusClasses = (isActive: boolean): string[] => {
                   >
                     <div class="px-1 py-1">
                       <MenuItem v-slot="{ active }">
-                        <button :class="getActiveStatusClasses(active)">
+                        <button :class="getActiveStatusClasses(active)" @click="setStatus(todo.id, ['unprocessed', '未対応'])">
                           未対応
                         </button>
                       </MenuItem>
                     </div>
                     <div class="px-1 py-1">
                       <MenuItem v-slot="{ active }">
-                        <button :class="getActiveStatusClasses(active)">
-                          対応中
+                        <button :class="getActiveStatusClasses(active)" @click="setStatus(todo.id, ['in progress', '処理中'])">
+                          処理中
                         </button>
                       </MenuItem>
                     </div>
