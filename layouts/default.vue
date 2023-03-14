@@ -1,5 +1,10 @@
+<script setup lang="ts">
+import SnackBar from '@/components/atoms/SnackBar.vue'
+</script>
+
 <template>
   <div class="app">
+    <SnackBar />
     <ApplicationHeader />
     <main class="main">
       <NuxtPage />

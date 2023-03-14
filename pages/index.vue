@@ -5,6 +5,8 @@ import { TodoItem, TodoStatus, useTodo } from '@/composables/useTodo'
 import Button from '@/components/atoms/Button.vue'
 import TextInput from '@/components/atoms/TextInput.vue'
 import ChevronDown from '@/components/atoms/ChevronDown.vue'
+import { useSnackBar } from '@/composables/useSnackBar'
+const { snackbar } = useSnackBar()
 const { todos } = useTodo()
 const newTodoTitle = ref('')
 
@@ -19,6 +21,7 @@ const addTodo = () => {
     updatedAt: now
   }
   todos.value.push(newTodoItem)
+  snackbar.push({ message: 'TODOを追加しました', type: 'success' })
 }
 
 const makeTodoDone = (id: string) => {
