@@ -1,4 +1,5 @@
 # capacidor
+<img src="docs/webview_screen.png" />
 
 ## Setup
 
