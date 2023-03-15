@@ -38,8 +38,7 @@ struct EnvironmentView: View {
                         print("Not guarded!")
                         // 必要ならここでURL文字列の検証を入れてもいい
                         URLSession.shared.dataTask(with: url) { (data, response, error) in
-                            print(response)
-                            if let error = error {
+                            if let _ = error {
                                 isDestinationNotFound = true
                                 return
                             }
@@ -51,7 +50,7 @@ struct EnvironmentView: View {
                                 isDestinationNotFound = true
                                 return
                             }
-                            guard let data = data, let url = response.url else {
+                            guard let _ = data, let _ = response.url else {
                                 isDestinationNotFound = true
                                 return
                             }
@@ -73,12 +72,12 @@ struct EnvironmentView: View {
                     Text("指定のURLは存在しないようです")
                 }
                 NavigationLink(
-                    destination: MainView(hostUrl: self.$envString.wrappedValue),
+                    destination: MainView(hostUrl: self.$envString.wrappedValue).navigationBarBackButtonHidden(),
                     isActive: $appRuntimeState.isEnvironmentValid) {
                     EmptyView()
                 }
             }.padding(20)
-        }.navigationBarBackButtonHidden(true)
+        }
     }
 }
 
