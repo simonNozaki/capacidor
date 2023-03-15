@@ -29,6 +29,7 @@ const makeTodoDone = (id: string) => {
   if (done) {
     // idで消して更新したものを戻す
     todos.value = todos.value.filter(t => t.id !== id)
+    snackbar.push({ message: 'TODOを完了しました', type: 'success' })
   }
 }
 
@@ -37,6 +38,7 @@ const setStatus = (id: string, status: TodoStatus) => {
   if (updated) {
     todos.value = todos.value.filter(t => t.id !== id)
     todos.value.push(updated)
+    snackbar.push({ message: `ステータスを${status[1]}に変更しました`, type: 'success' })
   }
 }
 
