@@ -5,19 +5,17 @@ const { snackbar } = useSnackBar()
 const isOpenSnackbar = snackbar.isOpenSnackBar
 const current = snackbar.current
 
-const closeSnackBar = () => {
-  snackbar.pop()
-}
+const classes = computed(() => ({
+  [['success', 'info', 'error'].filter(l => l === current.value.type).at(0) ?? '']: true
+}))
 </script>
 
 <template>
-  <div v-if="isOpenSnackbar" class="toast">
-    <div class="pl-4">
-      <p>
-        {{ current.message }}
-      </p>
-    </div>
-    <Button order="secondary" size="small" @click="closeSnackBar">
+  <div v-if="isOpenSnackbar" class="toast" :class="classes">
+    <p>
+      {{ current.message }}
+    </p>
+    <Button order="secondary" size="small" @click="snackbar.pop()">
       閉じる
     </Button>
   </div>
@@ -25,6 +23,18 @@ const closeSnackBar = () => {
 
 <style scoped>
 .toast {
-  @apply absolute top-0 flex items-center w-full max-w-xs p-4 text-gray-500 bg-white divide-x divide-gray-200 rounded shadow;
+  @apply fixed bottom-3 flex justify-between w-full max-w-xs p-4 left-1/2 -translate-x-1/2 z-50 text-gray-500 bg-white rounded shadow;
+}
+
+.success {
+  @apply bg-emerald-500 text-white;
+}
+
+.info {
+  @apply bg-sky-500 text-white;
+}
+
+.error {
+  @apply bg-rose-500 text-white;
 }
 </style>
