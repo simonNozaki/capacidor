@@ -11,14 +11,23 @@ const classes = computed(() => ({
 </script>
 
 <template>
-  <div v-if="isOpenSnackbar" class="toast" :class="classes">
-    <p>
-      {{ current.message }}
-    </p>
-    <Button order="secondary" size="small" @click="snackbar.pop()">
-      閉じる
-    </Button>
-  </div>
+  <transition
+    enter-active-class="transition duration-100 ease-out"
+    enter-from-class="transform scale-95 opacity-0"
+    enter-to-class="transform scale-100 opacity-100"
+    leave-active-class="transition duration-75 ease-in"
+    leave-from-class="transform scale-100 opacity-100"
+    leave-to-class="transform scale-95 opacity-0"
+  >
+    <div v-if="isOpenSnackbar" class="toast" :class="classes">
+      <p>
+        {{ current.message }}
+      </p>
+      <Button order="secondary" size="small" @click="snackbar.pop()">
+        閉じる
+      </Button>
+    </div>
+  </transition>
 </template>
 
 <style scoped>
