@@ -18,9 +18,7 @@ class SnackBar {
 
   pop (): Message | undefined {
     const m = this._messages.pop()
-    if (this._messages.length === 0) {
-      this._isOpenSnackBar.value = false
-    }
+    this._isOpenSnackBar.value = false
     return m
   }
 
