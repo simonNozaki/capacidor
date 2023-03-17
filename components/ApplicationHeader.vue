@@ -3,12 +3,13 @@
     <h1 class="title">
       capacidor
     </h1>
+    <Reload />
   </header>
 </template>
 
 <style scoped>
 header {
-  @apply mt-10;
+  @apply mt-10 flex justify-between;
 }
 
 .title {
