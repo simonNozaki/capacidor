@@ -5,6 +5,7 @@ import { TodoItem, TodoStatus, useTodo } from '@/composables/useTodo'
 import Button from '@/components/atoms/Button.vue'
 import TextInput from '@/components/atoms/TextInput.vue'
 import ChevronDown from '@/components/atoms/ChevronDown.vue'
+import TodoItemMenu from '@/components/TodoItemMenu.vue'
 import { useSnackBar } from '@/composables/useSnackBar'
 const { snackbar } = useSnackBar()
 const { todos } = useTodo()
@@ -75,7 +76,7 @@ const getActiveStatusClasses = (isActive: boolean): string[] => {
             <p class="todo-list-card-caption-title">
               {{ todo.title }}
             </p>
-            <div class="top-16 w-56">
+            <div>
               <Menu as="div" class="relative inline-block text-left">
                 <div>
                   <MenuButton as="div" class="status-menu-button">
@@ -83,6 +84,7 @@ const getActiveStatusClasses = (isActive: boolean): string[] => {
                       <span> {{ todo.status[1] }} </span> <span class="inline-block ml-1"> <ChevronDown size="12" /> </span>
                     </Button>
                   </MenuButton>
+                  <TodoItemMenu />
                 </div>
 
                 <transition
