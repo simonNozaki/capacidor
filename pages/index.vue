@@ -37,8 +37,7 @@ const makeTodoDone = (id: string) => {
 const setStatus = (id: string, status: TodoStatus) => {
   const updated = getUpdatedTodoOrNull(id, status)
   if (updated) {
-    todos.value = todos.value.filter(t => t.id !== id)
-    todos.value.push(updated)
+    todos.value = updateTodo(todos.value, id, updated)
     snackbar.push({ message: `ステータスを${status[1]}に変更しました`, type: 'success' })
   }
 }
@@ -51,6 +50,24 @@ const getUpdatedTodoOrNull = (id: string, status: TodoStatus): TodoItem | undefi
     .filter(t => t.id === id)
     .map(t => ({ ...t, status: status as TodoStatus }))
     .at(0)
+}
+
+/**
+ * もとの配列から特定のIDで更新したToDoを入れ替えて配列を返す。副作用はない。
+ */
+const updateTodo = (original: TodoItem[], id: string, todo: TodoItem): TodoItem[] => {
+  const newTodos = original.filter(t => t.id !== id)
+  newTodos.push(todo)
+  return newTodos
+}
+
+const setDescription = (id: string, text: string) => {
+  const todo = todos.value.filter(t => t.id === id).at(0)
+  if (todo) {
+    todo.description = text
+    todos.value = updateTodo(todos.value, id, todo)
+    snackbar.push({ message: 'メモを更新しました', type: 'success' })
+  }
 }
 
 const getActiveStatusClasses = (isActive: boolean): string[] => {
@@ -78,15 +95,13 @@ const getActiveStatusClasses = (isActive: boolean): string[] => {
             </p>
             <div>
               <Menu as="div" class="relative inline-block text-left">
-                <div>
+                <div class="py-1">
                   <MenuButton as="div" class="status-menu-button">
                     <Button size="small" order="secondary">
                       <span> {{ todo.status[1] }} </span> <span class="inline-block ml-1"> <ChevronDown size="12" /> </span>
                     </Button>
                   </MenuButton>
-                  <TodoItemMenu />
                 </div>
-
                 <transition
                   enter-active-class="transition duration-100 ease-out"
                   enter-from-class="transform scale-95 opacity-0"
@@ -115,6 +130,9 @@ const getActiveStatusClasses = (isActive: boolean): string[] => {
                   </MenuItems>
                 </transition>
               </Menu>
+              <span class="description-modal">
+                <TodoItemMenu @set-description="setDescription(todo.id, $event)" />
+              </span>
             </div>
           </div>
           <div class="todo-list-card-button">
@@ -167,5 +185,9 @@ const getActiveStatusClasses = (isActive: boolean): string[] => {
 
 .todo-list-card-status-button {
   @apply flex w-full items-center rounded-md px-2 py-2 text-sm;
+}
+
+.description-modal {
+  @apply inline-block mx-2;
 }
 </style>
