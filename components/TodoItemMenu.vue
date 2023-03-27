@@ -5,7 +5,7 @@ import {
   TransitionRoot,
   TransitionChild
 } from '@headlessui/vue'
-import Button from './atoms/Button.vue'
+import Button from './atoms/Button/Button.vue'
 
 export interface Emits {
   (e: 'setDescription', text: string): () => void
