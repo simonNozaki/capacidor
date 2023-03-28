@@ -1,5 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
+import { computed } from 'vue'
+
 export type ButtonSize = 'small' | 'medium'
 export type ButtonStyleOrder = 'primary' | 'secondary'
 
@@ -39,7 +41,7 @@ const classes = computed(() => ({
 }
 
 .primary {
-  @apply bg-teal-600 font-semibold text-white hover:bg-teal-400 focus:outline-none;
+  @apply bg-teal-600 font-semibold text-white hover:bg-teal-400 focus:outline-none border-0;
 }
 
 .secondary {
