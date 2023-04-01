@@ -1,3 +1,4 @@
+/* eslint-disable vue/one-component-per-file */
 /* eslint-disable vue/no-reserved-component-names */
 import { defineComponent } from 'vue'
 import type { Meta, Story } from '@storybook/vue3'
@@ -23,4 +24,22 @@ export const Default: Story<Props> = args =>
       return args
     },
     template: '<Button>ボタン</Button>'
+  })
+
+export const Secondary: Story<Props> = args =>
+  defineComponent({
+    components: { Button },
+    setup () {
+      return args
+    },
+    template: '<Button order="secondary">ボタン</Button>'
+  })
+
+export const Small: Story<Props> = args =>
+  defineComponent({
+    components: { Button },
+    setup () {
+      return args
+    },
+    template: '<Button size="small">ボタン</Button>'
   })

@@ -41,7 +41,7 @@ const classes = computed(() => ({
 }
 
 .primary {
-  @apply bg-teal-600 font-semibold text-white hover:bg-teal-400 focus:outline-none border-0;
+  @apply bg-teal-600 font-semibold text-white hover:bg-teal-400 focus:outline-none;
 }
 
 .secondary {
