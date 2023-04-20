@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import Button from '../Button/Button.vue'
-import { useSnackBar } from '@/composables/useSnackBar'
+import { useSnackBar } from '../../../composables/useSnackBar'
 const { snackbar } = useSnackBar()
 const isOpenSnackbar = snackbar.isOpenSnackBar
 const current = snackbar.current

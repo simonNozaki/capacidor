@@ -1,3 +1,5 @@
+import { ref } from 'vue'
+
 export type SnackBarType = 'success' | 'error' | 'info'
 
 export interface Message {

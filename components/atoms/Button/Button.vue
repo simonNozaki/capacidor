@@ -45,7 +45,7 @@ const classes = computed(() => ({
 }
 
 .secondary {
-  @apply bg-gray-100 text-stone-800 hover:bg-gray-50 focus:outline-none;
+  @apply bg-gray-200 text-stone-800 hover:bg-gray-100 focus:outline-none border;
 }
 
 .medium {
