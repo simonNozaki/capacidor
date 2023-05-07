@@ -49,7 +49,7 @@ const classes = computed(() => ({
 }
 
 .medium {
-  @apply px-3 py-2;
+  @apply px-3 py-1;
 }
 
 .small {
